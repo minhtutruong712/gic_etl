@@ -39,35 +39,77 @@ with address_parsing as (
     FROM T_DD_BUSI_DATA_TABLE_RECORD 
     WHERE UPPER(DATA_TABLE_ID) LIKE '%9801560419%' 
 )
+
 select 
-    pt.party_id customer_src_id, 
-    ad.AddressType address_type, 
+    cast(pt.party_id as VARCHAR2(36 BYTE)) as customer_src_id, 
+    at.TYPE_NAME address_type, 
     RTRIM(
         COALESCE(ad.Address4 || ', ', '') ||
         COALESCE(ad.Address3 || ', ', '') ||
         COALESCE(ad.Address2 || ', ', '') ||
         COALESCE(ad.Address1, ''),
     ', '
-    ) AS full_address, 
+    ) AS full_address,
     ad.Address1 city_province, 
     cd.city_code,
     ad.Address2 district, 
-    cd.district_code,
+    cd.district_code, 
     ad.Address3 ward, 
     cd.ward_code
 
     from T_PTY_PARTY pt 
     left join address_parsing ad on pt.party_id = ad.customer_id
+    left join T_PTY_ADDRESS_TYPE at on ad.AddressType = at.ADDRESS_TYPE
     left join city_code cd 
         on nvl(ad.Address1, '') = cd.city_name
         and nvl(ad.Address2, '') = cd.district_name
         and nvl(ad.Address3, '') = cd.ward_name
-;
--- DATAHUB --
+
+union all -- datahub 
+select 
+    c.id as customer_src_id,
+    cast(case 
+        when CompanyAddress is not null then 'Work'
+        when Address is not null then 'Home'
+        else '' 
+    end as NVARCHAR2(100)) as AddressType, 
+
+    case 
+        when CompanyAddress is not null then CompanyAddress
+        when Address is not null then Address
+        else null 
+    end as full_address,
+    m1.Name as city_province, 
+    m1.Code as city_code,
+    m2.Name district, 
+    m2.Code district_code,
+    null ward, 
+    null ward_code
+
+
+from Customers c
+left join MetadataTypes m1 
+    on m1.ID = c.ProvinceId
+left join MetadataTypes m2 
+    on m2.ID = c.DistrictId
+
+union all 
+select -- IBMS
+    customer_id as customer_src_id, 
+    null as AddressType, 
+    CUSTOMER_ADDRESS as full_address, 
+    null as city_province, 
+    null as city_code,
+    null as district, 
+    null as district_code,
+    null ward, 
+    null ward_code
+from IBMS_Customer;
 
 
 
 
+select * from t_pty_address_type;
 
 
 
