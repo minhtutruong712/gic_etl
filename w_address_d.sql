@@ -109,9 +109,4 @@ from IBMS_Customer;
 
 
 
-select * from t_pty_address_type;
-
-
-
-
 
