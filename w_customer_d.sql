@@ -80,8 +80,6 @@ select -- PP --
 
 from Customers c
 left join MetadataTypes m on c.GenderID= m.ID 
-left join CustomerContracts cc on c.Id =cc.CustomerId
-left join ProductDetails pd ON cc.ContractId = pd.Id
 
 union all 
 select 
