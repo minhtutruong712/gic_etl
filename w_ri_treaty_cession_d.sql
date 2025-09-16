@@ -203,14 +203,14 @@ select * from final
 --     having count(*) > 1
 ;
 
-select content, json_query(content, '$.RiPolicyTreatyCessions') as RiPolicyTreatyCessions, content, t.* from T_AP98_RI_POLICY_RISK_UNIT t
-where json_query(content, '$.RiPolicyTreatyCessions') is not null
--- where RI_POLICY_ID = 86238312
+-- select content, json_query(content, '$.RiPolicyTreatyCessions') as RiPolicyTreatyCessions, content, t.* from T_AP98_RI_POLICY_RISK_UNIT t
+-- where json_query(content, '$.RiPolicyTreatyCessions') is not null
+-- -- where RI_POLICY_ID = 86238312
 
-;
-select RI_POLICY_RISK_UNIT_ID, count(*) from T_AP98_RI_POLICY_RISK_UNIT
-group by RI_POLICY_RISK_UNIT_ID
-having count(*) > 1;
+-- ;
+-- select RI_POLICY_RISK_UNIT_ID, count(*) from T_AP98_RI_POLICY_RISK_UNIT
+-- group by RI_POLICY_RISK_UNIT_ID
+-- having count(*) > 1;
 
 
-select * from T_AP98_RI_TREATY where ri_treaty_id = 89377545;
+-- select * from T_AP98_RI_TREATY where ri_treaty_id = 89377545;
