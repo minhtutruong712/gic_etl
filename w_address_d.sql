@@ -40,7 +40,7 @@ city_code AS (
 , gic_core_data AS (
     SELECT 
         CAST(pt.party_id AS VARCHAR2(36 BYTE)) AS customer_src_id,
-        'GIC_CORE' AS source,
+        'GICORE' AS source,
         a.ADDRESS_ID AS address_src_id,      --**<Manhadd>
         at.TYPE_NAME AS address_type,        --**<Manhadd>
         RTRIM(
@@ -128,5 +128,5 @@ SELECT
     ward,
     ward_code,
     street,
-    coalesce(cast(address_src_id AS VARCHAR2(50)), customer_src_id) || coalesce(ward_code,'0') || source as w_integration_key
+    coalesce(cast(address_src_id AS VARCHAR2(50)), customer_src_id) || '-' || coalesce(ward_code,'0') || '-' || source as w_integration_key
 FROM combined_data
