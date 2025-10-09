@@ -1,12 +1,14 @@
-
-select distinct
+select DISTINCT 
 
     BUSINESS_CODE product_code, 
     VERSION_DESCRIPTION product_name, 
     JSON_VALUE(T4.DYNAMIC_FIELDS, '$.SubProductCode') sub_product_code,
     JSON_VALUE(T4.DYNAMIC_FIELDS, '$.SubProductName') sub_product_name,
     null as product_currency_code, 
-    PRODUCT_VERSION product_version
+    PRODUCT_VERSION product_version, 
+    T1.PRODUCT_ID || '-' || T4.RECORD_ID || '-' || 'GICORE' as w_integration_key
+    
+
 
 
 
@@ -17,9 +19,8 @@ select distinct
     
     WHERE PRODUCT_VERSION = '1.0' AND T3.NAME = 'PolicyPolicySubProduct'
 
--- union all ;
 
--- select * from PRODUCTDETAILS
+
 
 
 

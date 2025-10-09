@@ -28,7 +28,8 @@ select
     p.ORG_PARENT_ORG_ID org_parent_org_id, 
     p.IS_ORG_PARTY is_org_party, 
     null as payment_method, 
-    null as relationship_type
+    null as relationship_type,
+    cast(p.party_id as VARCHAR2(36 BYTE)) || '-' || 'GICORE' as w_integration_key
 
 from T_PTY_PARTY p
 left join T_PTY_GENDER g 
@@ -76,10 +77,11 @@ select -- PP --
     null as org_parent_org_id,
     null as is_org_party,
     null as payment_method, 
-    null as relationship_type
+    null as relationship_type,
+    c.id || '-' || 'PP' as w_integration_key
 
 from Customers c
-left join MetadataTypes m on c.GenderID= m.ID 
+left join MetadataTypes m on c.GenderID= m.ID
 
 union all 
 select 
@@ -111,7 +113,8 @@ select
     null as org_parent_org_id,
     null as is_org_party,
     null as payment_method, 
-    null as relationship_type
+    null as relationship_type,
+    Customer_No || '-' || 'IBMS' as w_integration_key
 
     from IBMS_Customer
 

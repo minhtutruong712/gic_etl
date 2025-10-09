@@ -30,7 +30,8 @@ json_value(T_PA_POLICY_ELEMENT.DYNAMIC_FIELDS,'$.ShipBuildingMaterial') ship_bui
 json_value(T_PA_POLICY_ELEMENT.DYNAMIC_FIELDS,'$.PlaceOfBuilt') place_of_built,
 json_value(T_PA_POLICY_ELEMENT.DYNAMIC_FIELDS,'$.Deadweight') dead_weight,
 json_value(T_PA_POLICY_ELEMENT.DYNAMIC_FIELDS,'$.HighSpeedShipOver30km') high_speed_ship_over_30_km_h,
-json_value(T_PA_POLICY_ELEMENT.DYNAMIC_FIELDS,'$.RegistrationNumber') imo_registration_no
+json_value(T_PA_POLICY_ELEMENT.DYNAMIC_FIELDS,'$.RegistrationNumber') imo_registration_no,
+INSURED_ID || '-' || 'GICORE' w_integration_key
 
 FROM T_PA_INSURED 
 LEFT JOIN T_PA_POLICY_ELEMENT 
@@ -39,6 +40,6 @@ LEFT JOIN T_PA_POLICY_ELEMENT
 INNER JOIN T_PA_POLICY ON T_PA_POLICY.POLICY_ID = T_PA_INSURED.POLICY_ID 
 INNER JOIN T_PRD_PRODUCT ON T_PA_POLICY.PRODUCT_ID = T_PRD_PRODUCT.PRODUCT_ID  
 WHERE BUSINESS_CODE IN ('MHF', 'MHG', 'MHR') 
-and ELEMENT_TYPE = 'INSURED';
+and ELEMENT_TYPE = 'INSURED'
 
 
