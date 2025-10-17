@@ -18,7 +18,7 @@ select distinct
     json_value(ri.CONTENT,'$.ChangeAgentCommission') change_agent_commision,
     json_value(ri.CONTENT,'$.IsCessionAdjustmentEndo') is_session_adjustment_endo,
     json_value(ri.CONTENT,'$.IsUndo') is_undo,
-    ri.RI_POLICY_ID || "-" || rsk.RI_POLICY_RISK_UNIT_ID || "-" || 'GICORE' w_integration_key
+    ri.RI_POLICY_ID || '-' || rsk.RI_POLICY_RISK_UNIT_ID || '-' || 'GICORE' w_integration_key
 
     from T_AP98_RI_POLICY_RISK_UNIT rsk
     left join T_AP98_RI_POLICY ri
