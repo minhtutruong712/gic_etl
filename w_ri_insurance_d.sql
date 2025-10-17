@@ -1,9 +1,9 @@
-select 
+select distinct
     ri.RI_POLICY_ID ri_policy_src_id,
-    ri.RI_POLICY_RISK_UNIT_ID ri_policy_risk_unit_src_id,
+    rsk.RI_POLICY_RISK_UNIT_ID ri_policy_risk_unit_src_id,
     json_value(ri.CONTENT,'$.BusinessSource') bussiness_source, 
-    json_value(ri.CONTENT,'$.TransType') trans_type, 
-    json_value(ri.CONTENT,'$.FundType') fund_type,
+    json_value(ri.CONTENT,'$.TransType') trns_type, 
+    json_value(ri.CONTENT,'$.FundType') funad_type,
     json_value(ri.CONTENT,'$.Lob') lod,
     json_value(ri.CONTENT,'$.LobCode') lod_code,
     json_value(ri.CONTENT,'$.Fronting') fronting,
@@ -17,18 +17,10 @@ select
     json_value(ri.CONTENT,'$.ChangePremium') change_premium,
     json_value(ri.CONTENT,'$.ChangeAgentCommission') change_agent_commision,
     json_value(ri.CONTENT,'$.IsCessionAdjustmentEndo') is_session_adjustment_endo,
-    json_value(ri.CONTENT,'$.IsUndo') is_undo
+    json_value(ri.CONTENT,'$.IsUndo') is_undo,
+    ri.RI_POLICY_ID || "-" || rsk.RI_POLICY_RISK_UNIT_ID || "-" || 'GICORE' w_integration_key
 
     from T_AP98_RI_POLICY_RISK_UNIT rsk
     left join T_AP98_RI_POLICY ri
         on json_value(rsk.CONTENT,'$.RiPolicyId') = ri.RI_POLICY_ID
 
-;
--- select RI_POLICY_ID
--- , count(*) from T_AP98_RI_POLICY
--- group by RI_POLICY_ID
--- having count(*) > 1;
--- select RI_POLICY_RISK_UNIT_ID, count(*) 
--- from T_AP98_RI_POLICY_RISK_UNIT
--- group by RI_POLICY_RISK_UNIT_ID
--- having count(*) > 1;

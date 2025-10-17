@@ -163,7 +163,8 @@ with treaty_id as (
     c.cash_call_limit, 
     i.re_in_statement_premium_rate, 
     c.lines, 
-    c.retention --null
+    c.retention,
+    c.ri_treaty_id || '-' || c.risk_level || '-' || tc.re_insurer_id || '-' || c.risk_category || '-' || c.sub_risk_categories || '-' || i.ri_policy_risk_unit_id || '-' || 'GICORE' w_integration_key
     -- t.CONTENT
     from cession c 
     left join 
@@ -183,6 +184,7 @@ with treaty_id as (
         on c.ri_treaty_id = i.treaty_id
 )
 select * from final
+
 
 
 -- key of this entity
@@ -214,3 +216,7 @@ select * from final
 
 
 -- select * from T_AP98_RI_TREATY where ri_treaty_id = 89377545;
+
+
+
+

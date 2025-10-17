@@ -12,7 +12,9 @@ distinct
     p.PARTY_NAME insurer_company,
 
     CAST(c.EMAIL AS VARCHAR2(255)) AS email,
-    CAST(c.FAX AS VARCHAR2(255)) AS fax
+    CAST(c.FAX AS VARCHAR2(255)) AS fax,
+
+    json_value(CONTENT,'$.ReinsurerId') || '-' || 'GICORE' w_integration_key
 
 
 
@@ -21,4 +23,3 @@ left join T_PTY_PARTY p
     on json_value(ri.CONTENT,'$.ReinsurerId') = p.party_id
 left join T_PTY_CONTACT c 
     on p.PARTY_ID = c.PARTY_ID
-;
